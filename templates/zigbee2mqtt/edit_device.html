@@ -1,0 +1,303 @@
+<link rel="stylesheet" href="../templates/zigbee2mqtt/css/bootstrap-select.min.css">
+
+<!-- Table 'mqtt' edit -->
+<p align=center>
+ <a href="?">&lt;&lt;&lt; <#LANG_BACK#></a>
+</p>
+<form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
+<fieldset>
+
+<!-- TITLE (varchar) -->
+
+<table border=0 width=100% ><tr><td width=60%>
+     <div class="form-group">
+     <label class="control-label"> ID</label>
+     <div class="col-md-6 input-group">
+     <input type="text"  class="form-control" placeholder="<#LANG_OW_CITYNAME#>" value="[#ID#]" name="id" disabled>
+     <div class="input-group-btn">
+     </div> </div> </div>
+
+
+     <div class="form-group">
+     <label class="control-label"> <#LANG_TITLE#>: (*)</label>
+     <div class="col-md-6 input-group">
+     <input type="text"  class="form-control" placeholder="<#LANG_OW_CITYNAME#>" value="[#TITLE#]" name="dev_title" >
+     <div class="input-group-btn">
+     </div> </div> </div>
+
+
+     <div class="form-group">
+     <label class="control-label"> IEEEADDR:</label>
+     <div class="col-md-6 input-group">
+     <input type="text"  class="form-control" placeholder="<#LANG_OW_CITYNAME#>" value="[#IEEEADDR#]" name="ieeeaddr" disabled>
+     <div class="input-group-btn">
+     </div> </div> </div>
+
+
+     <div class="form-group">
+     <label class="control-label"> MODEL:</label>
+     <div class="col-md-6 input-group">
+     <input type="text"  class="form-control" placeholder="<#LANG_OW_CITYNAME#>" value="[#MODEL#]" name="model" disabled >
+     <div class="input-group-btn">
+     </div> </div> </div>
+
+
+     <div class="form-group">
+     <label class="control-label"> MODELID:</label>
+     <div class="col-md-6 input-group">
+     <input type="text"  class="form-control"  value="[#DEVICE_NAME#]" name="model" disabled >
+     <div class="input-group-btn">
+     </div> </div> </div>
+
+     <div class="form-group">
+     <label class="control-label"> GATEWAY:</label>
+     <div class="col-md-6 input-group">
+     <input type="text"  class="form-control"  value="[#GW#]" name="gw" disabled >
+     <div class="input-group-btn">
+     </div> </div> </div>
+
+
+
+
+
+     <div class="form-group">
+     <label class="control-label">GROUP (NEW):</label>
+     <div class="col-md-6 input-group">
+     <!--
+     <input type="text"  class="form-control" value="[#GROUP#]" name="creategroup" >
+     -->
+     
+     <input type="text"  class="form-control" value="" name="creategroup" >
+     <div class="input-group-btn">
+     </div> </div> 
+
+
+
+
+</div>
+
+
+<div class="form-group">
+ <label class="control-label"[#if ERR_LOCATION_ID#] style="color:red;font-weight:bold"[#endif#]>
+GROUP (SELECT):
+ </label>
+
+
+
+<div class="col-md-6 input-group">
+
+ <select name="selectdevicegroup"  class="form-control input">
+ <option value="">select
+  [#begin GROUPS#]<option value="[#TITLE#]"[#if SELECTED#] selected[#endif#]>[#TITLE#]
+  [#end GROUPS#]
+ </select>
+</div>
+</div>
+
+
+<!--
+
+
+     <div class="form-group">
+     <label class="control-label">MODELNAME:</label>
+     <div class="col-md-6 input-group">
+     <input type="text"  class="form-control" placeholder="<#LANG_OW_CITYNAME#>" value="[#MODELNAME#]" disabled>
+     <div class="input-group-btn">
+     </div> </div> </div>
+
+
+-->
+
+
+<!----------------------------------------->
+<div class="form-group">
+
+ <label class="control-label"[#if NEEDSAVEVENDOR="1"#] style="color:red;font-weight:bold"[#endif#]>
+ SELECTVENDOR: <#SELECTVENDOR#>
+ </label>
+
+
+
+<div class="col-md-6 input-group">
+
+
+
+ <select name="selectvendor"  class="selectpicker show-tick form-control">
+[#if SELECTVENDOR=""#]
+<option ></option > [#else#]
+<!--<option data-content="<img src='../templates/zigbee2mqtt/img/[#SELECTVENDOR#].jpg'  height='40' onerror="this.style.visibility = 'hidden'"> [#SELECTVENDOR#]" value="[#SELECTVENDOR#]" ></option>
+-->
+
+[#endif#]
+
+  [#begin SELECTVENDORARRAY#]
+
+<!--<option data-content="<img src='../templates/zigbee2mqtt/img/[#model#].jpg' width='40' height='40'> [#vendor#]: [#model#]" value="[#model#]" [#if DEVICE_TYPE="<#SELECTTYPE#>"#] selected[#endif#]></option>
+-->
+
+
+
+<option data-content="<img src='../templates/zigbee2mqtt/img/[#vendor#].jpg'  height='40' >[#vendor#]" value="[#vendor#]" [#if vendor="<#SELECTVENDOR#>"#] selected[#endif#]></option>
+
+
+ [#end SELECTVENDORARRAY#] 
+
+ </select>
+
+</div>
+</div>
+
+
+<!----------------------------------------->
+<div class="form-group">
+ <label class="control-label"[#if NEEDSAVETYPE="1"#] style="color:red;font-weight:bold"[#endif#]>
+ SELECTTYPE: <#SELECTTYPE#>
+ </label>
+
+
+
+<div class="col-md-6 input-group">
+
+
+
+ <select name="selecttype"  class="selectpicker show-tick form-control">
+<!--
+[#if SELECTTYPE=""#]
+<option ></option > [#else#]
+<option data-content="<img src='../templates/zigbee2mqtt/img/[#SELECTTYPE#].jpg' width='40' height='40'> [#SELECTVENDOR#]: [#SELECTTYPE#]" value="[#SELECTTYPE#]" ></option>
+<optgroup label="Zigbee">
+[#endif#]
+-->
+  [#begin SELECTTYPEARRAY#]
+<option ></option > 
+<!--<option data-content="<img src='../templates/zigbee2mqtt/img/[#model#].jpg' width='40' height='40'> [#vendor#]: [#model#]" value="[#model#]" [#if DEVICE_TYPE="<#SELECTTYPE#>"#] selected[#endif#]></option>-->
+<option [#if model#] data-content="<img src='../templates/zigbee2mqtt/img/[#model#].jpg' width='40' height='40'>[#model#]" [#endif#] value="[#model#]" [#if model="<#SELECTTYPE#>"#] selected[#endif#]></option>
+
+
+ [#end SELECTTYPEARRAY#] 
+<!--</optgroup> -->
+ </select>
+</div>
+</div>
+
+
+
+
+
+
+
+<!--
+
+	
+     <div class="form-group">
+     <label class="control-label">VENDOR:</label>
+     <div class="col-md-6 input-group">
+     <input type="text"  class="form-control" placeholder="<#LANG_OW_CITYNAME#>" value="[#VENDOR#]" disabled>
+     <div class="input-group-btn">
+     </div> </div> </div>
+
+-->
+
+     <div class="form-group">
+     <label class="control-label">DESCRIPTION</label>
+     <div class="col-md-6 input-group">
+     <input type="text"  class="form-control" placeholder="<#LANG_OW_CITYNAME#>" value="[#DESCRIPTION#]" disabled>
+     <div class="input-group-btn">
+     </div> </div> </div>
+
+
+
+<div class="form-group">
+ <label class="control-label"[#if ERR_LOCATION_ID#] style="color:red;font-weight:bold"[#endif#]>
+ <#LANG_LOCATION#>:
+ </label>
+
+
+
+<div class="col-md-6 input-group">
+
+ <select name="devlocid"  class="form-control input">
+ <option value="">select
+  [#begin LOCATION_ID_OPTIONS#]<option value="[#ID#]"[#if SELECTED#] selected[#endif#]>[#TITLE#]
+  [#end LOCATION_ID_OPTIONS#]
+ </select>
+</div>
+</div>
+
+
+<div class="form-group">
+ <label class="control-label"[#if ERR_HISTORY#] style="color:red;font-weight:bold"[#endif#]>
+ KEEP HISTORY:
+ </label>
+
+
+
+<div class="col-md-6 input-group">
+
+ <select name="history"  class="form-control input">
+
+<option value="1"[#if HISTORY="1"#] selected[#endif#]>Yes
+<option value="0"[#if HISTORY="0"#] selected[#endif#]>No
+ </select>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</td><td valign="top">
+
+
+[#if MODELNAME#]
+<a href="https://www.zigbee2mqtt.io/devices/[#SELECTTYPE#]">
+<img src="../templates/zigbee2mqtt/img/[#SELECTTYPE#].jpg"   class="img-rounded" height="300" width="300">
+</a>
+[#endif#]
+<!--
+[#if TITLE="bridge"#]
+<img src="../templates/zigbee2mqtt/img/cc2531.jpg"  height="300" width="300" class="img-rounded">
+[#endif#]
+-->
+
+</td></tr>
+</table>
+
+<div class="form-actions">
+ [#if ID!=""#]
+ <button type="submit" name="subm" value="<#LANG_SUBMIT#>" class="btn btn-defaul btn-primary"><#LANG_SUBMIT#></button>
+ [#else ID#]
+ <button type="submit" name="subm" value="<#LANG_ADD#>" class="btn btn-defaul btn-primary"><#LANG_ADD#></button>
+ [#endif ID#]
+ <a href="?" class="btn btn-default"><#LANG_CANCEL#></a>
+
+
+<input type="hidden" name="id" value="<#ID#>">
+<input type="hidden" name="view_mode" value="update_device">
+<input type="hidden" name="mode" value="update">
+
+
+</div>
+</fieldset>
+</form>
+
+<script>
+
+var script = document.createElement('script');
+script.src = "../templates/zigbee2mqtt/css/bootstrap-select.min.js"
+document.body.appendChild(script);
+
+script.onload = function() {
+	// ╨а┬а╨бтАФ╨а┬а╨бтАв╨а╨О╨а╤У╨а┬а╨Т┬╗╨а┬а╨Т┬╡ ╨а┬а╨бтАФ╨а┬а╨бтАв╨а┬а╨втАШ╨а┬а╨бтАУ╨а╨О╨атАЪ╨а╨О╨бтАЬ╨а┬а╨Т┬╖╨а┬а╨бтАЭ╨а┬а╨бтАШ js-╨а╨О╨▓╨В╤Ы╨а┬а╨Т┬░╨а┬а╨▓тАЮтАУ╨а┬а╨Т┬╗╨а┬а╨Т┬░ ╨а┬а╨бтАФ╨а┬а╨Т┬╡╨а╨О╨атАЪ╨а┬а╨Т┬╡╨а╨О╨атАЪ╨а┬а╨бтАШ╨а╨О╨а╤У╨а╨О╨бтАЬ╨а┬а╨Т┬╡╨а┬а╨б┬Ш ╨а╨О╨а╨К╨а┬а╨Т┬╗╨а┬а╨Т┬╡╨а┬а╨б┬Ш╨а┬а╨Т┬╡╨а┬а╨атАж╨а╨О╨▓╨В╤Щ select
+	$('.selectpicker').selectpicker('render');
+}
+
+</script>

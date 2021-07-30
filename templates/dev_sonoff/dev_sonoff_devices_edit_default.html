@@ -1,0 +1,148 @@
+
+<!-- Table 'dev_sonoff_devices' edit -->
+<form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
+[#if OK#]
+<div class="alert alert-success"><#LANG_DATA_SAVED#></div>
+[#endif OK#]
+[#if ERR#]
+<div class="alert alert-danger"><#LANG_FILLOUT_REQURED#></div>
+[#endif ERR#]
+<fieldset>
+[#if ID=""#]
+<legend><#LANG_NEW_RECORD#></legend>
+[#endif ID#]
+<!-- TITLE (varchar) -->
+<div class="form-group[#if ERR_TITLE#] has-error[#endif#]">
+ <label for="title" class="col-lg-3 control-label">
+ <#LANG_TITLE#>:
+ (*)
+ </label>
+ <div class="col-lg-9"><input id="title" name="title" value="[#TITLE#]" type="text" class="form-control"></div>
+</div>
+<!-- DEVICEID (varchar) -->
+<div class="form-group[#if ERR_DEVICEID#] has-error[#endif#]">
+ <label for="deviceid" class="col-lg-3 control-label">
+ DEVICEID:
+ </label>
+ <div class="col-lg-9">
+	<input id="deviceid" name="deviceid" value="[#DEVICEID#]" type="hidden" class="form-control">
+	<input value="[#DEVICEID#]" type="text" class="form-control" disabled>	
+</div>
+</div>
+<!-- BRANDNAME (varchar) -->
+<div class="form-group[#if ERR_BRANDNAME#] has-error[#endif#]">
+ <label for="brandname" class="col-lg-3 control-label">
+ BRANDNAME:
+ </label>
+ <div class="col-lg-9">
+	<input id="brandname" name="brandname" value="[#BRANDNAME#]" type="hidden" class="form-control">
+	<input value="[#BRANDNAME#]" type="text" class="form-control" disabled>
+</div>
+</div>
+<!-- PRODUCTMODEL (varchar) -->
+<div class="form-group[#if ERR_PRODUCTMODEL#] has-error[#endif#]">
+ <label for="productmodel" class="col-lg-3 control-label">
+ PRODUCTMODEL:
+ </label>
+ <div class="col-lg-9">
+	<input id="productmodel" name="productmodel" value="[#PRODUCTMODEL#]" type="hidden" class="form-control">
+	<input value="[#PRODUCTMODEL#]" type="text" class="form-control" disabled>
+</div>
+</div>
+<!-- UIID (varchar) -->
+<div class="form-group[#if ERR_UIID#] has-error[#endif#]">
+ <label for="uiid" class="col-lg-3 control-label">
+ UIID:
+ </label>
+ <div class="col-lg-9">
+	<input id="uiid" name="uiid" value="[#UIID#]" type="hidden" class="form-control">
+	<input value="[#UIID#]" type="text" class="form-control" disabled>
+</div>
+</div>
+<!-- UIID (varchar) -->
+<div class="form-group[#if ERR_UIID#] has-error[#endif#]">
+ <label for="uiid" class="col-lg-3 control-label">
+ DEVICEKEY:
+ </label>
+ <div class="col-lg-9">
+	<input id="devicekey" name="devicekey" value="[#DEVICEKEY#]" type="hidden" class="form-control">
+	<input value="[#DEVICEKEY#]" type="text" class="form-control" disabled>
+</div>
+</div>
+<!-- UIID (varchar) -->
+<div class="form-group[#if ERR_UIID#] has-error[#endif#]">
+ <label for="uiid" class="col-lg-3 control-label">
+ <#LANG_UPDATED#>:
+ </label>
+ <div class="col-lg-9"><input value="[#UPDATED#]" type="text" class="form-control" disabled></div>
+</div>
+[#if MDNS_NAME!=""#]
+ [#if DEVICE_MODE=="1"#]
+ <div class="alert alert-info" role="alert">LAN режим активен</div>
+ [#endif DEVICE_MODE#]
+  [#if DEVICE_MODE=="off"#]
+ <div class="alert alert-warning" role="alert">Доступен LAN режим</div>
+ [#endif DEVICE_MODE#]
+<div class="form-group">
+ <label class="control-label">
+ LAN Mode:
+ </label>
+	<div class="btn-group controls" style="margin-left:0px" data-toggle="buttons">
+		<label class="btn [#if DEVICE_MODE=="1"#]btn-primary[#else#]btn-default[#endif#]">
+			<input type="radio" name="device_mode" value="1" [#if DEVICE_MODE=="1"#] checked[#endif#]> <#LANG_ON#>
+		</label>
+		<label class="btn [#if DEVICE_MODE=="off"#]btn-primary[#else#]btn-default[#endif#]">
+			<input type="radio" name="device_mode" value="off" [#if DEVICE_MODE=="off"#] checked[#endif#]> <#LANG_OFF#>
+		</label>
+	</div>
+</div> 
+
+<div class="form-group">
+ <label for="mdns_name" class="col-lg-3 control-label">
+ MDNS_NAME:
+ </label>
+ <div class="col-lg-9">
+	<input id="mdns_name" name="mdns_name" value="[#MDNS_NAME#]" type="hidden" class="form-control">
+	<input value="[#MDNS_NAME#]" type="text" class="form-control" disabled>
+</div>
+</div>
+<div class="form-group">
+ <label for="ip" class="col-lg-3 control-label">
+ IP:
+ </label>
+ <div class="col-lg-9">
+	<input id="ip" name="mdns_name" value="[#IP#]" type="hidden" class="form-control">
+	<input value="[#IP#]" type="text" class="form-control" disabled>
+</div>
+</div>
+<div class="form-group">
+ <label for="port" class="col-lg-3 control-label">
+ PORT:
+ </label>
+ <div class="col-lg-9">
+	<input id="port" name="mdns_name" value="[#PORT#]" type="hidden" class="form-control">
+	<input value="[#PORT#]" type="text" class="form-control" disabled>
+</div>
+</div>
+ [#endif MDNS_NAME#]
+
+
+<div class="form-group">
+        <div class="col-lg-offset-3 col-lg-4">
+ [#if ID!=""#]
+ <button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_SUBMIT#></button>
+ [#else ID#]
+ <button type="submit" name="subm" value="Add" class="btn btn-primary"><#LANG_ADD#></button>
+ [#endif ID#]
+ <a href="?data_source=<#DATA_SOURCE#>&view_mode=share_dev_sonoff_devices&id=[#ID#]" class="btn btn-default" title="Share">Поделиться</a>
+ <a href="?data_source=<#DATA_SOURCE#>" class="btn btn-default "><#LANG_CANCEL#></a>
+<input type="hidden" name="id" value="<#ID#>">
+<input type="hidden" name="view_mode" value="<#VIEW_MODE#>">
+<input type="hidden" name="edit_mode" value="<#EDIT_MODE#>">
+<input type="hidden" name="mode" value="update">
+<input type="hidden" name="data_source" value="<#DATA_SOURCE#>">
+<input type="hidden" name="tab" value="<#TAB#>">
+        </div>
+</div>
+</fieldset>
+</form>

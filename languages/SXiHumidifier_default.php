@@ -1,0 +1,35 @@
+<?php
+
+$dictionary=array(
+ 
+'DEVICES_HUMIDIFIER_MODE' => 'Mode',
+'DEVICES_HUMIDIFIER_MODE_AUTO' => 'Auto',
+'DEVICES_HUMIDIFIER_MODE_HIGH' => 'High',
+'DEVICES_HUMIDIFIER_MODE_MEDIUM' => 'Medium',
+'DEVICES_HUMIDIFIER_MODE_SILENT' => 'Silent',
+'DEVICES_HUMIDIFIER_WATER_LEVEL' => 'Water level',
+'DEVICES_HUMIDIFIER_SPEED' => 'Speed',
+'DEVICES_HUMIDIFIER_DRY' => 'Dry',
+'DEVICES_HUMIDIFIER_USE_TIME' => 'Use time(sec)',
+'DEVICES_HUMIDIFIER_LED' => 'Led',
+'DEVICES_HUMIDIFIER_LED_BRIGHT' => 'Bright',
+'DEVICES_HUMIDIFIER_LED_DIM' => 'Dim',
+'DEVICES_HUMIDIFIER_LED_OFF' => 'Off',
+'DEVICES_HUMIDIFIER_BUZZER' => 'Buzzer',
+'DEVICES_HUMIDIFIER_CHILD_LOCK' => 'Child lock',
+'DEVICES_HUMIDIFIER_LIMIT_NUM' => 'Limit humidity',
+
+'DEVICES_HUMIDIFIER_SET_MODE_AUTO' => 'Set auto mode',
+'DEVICES_HUMIDIFIER_SET_MODE_HIGH' => 'Set high mode',
+'DEVICES_HUMIDIFIER_SET_MODE_MEDIUM' => 'Set medium mode',
+'DEVICES_HUMIDIFIER_SET_MODE_SILENT' => 'Set silent mode',
+ 
+);
+
+foreach ($dictionary as $k=>$v) {
+ if (!defined('LANG_'.$k)) {
+  define('LANG_'.$k, $v);
+ }
+}
+
+?>

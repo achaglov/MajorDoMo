@@ -1,0 +1,21 @@
+<style>
+.container {
+  position: relative;
+}
+.bottomright {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  font-size: 12px;
+}
+</style>
+<div class="device-widget controller online">
+    <div class="container device-icon %.status|"off;on"%" style='background-image:url(../templates/xiaomimiio/img/small/roborock.vacuum.s5.png);background-size: 55px 55px;width:60px;height:60px;margin-right:5px'>
+        <i class="%.state_icon% bottomright"></i>
+    </div>
+    <div class="device-header" style="padding-top:0px;height:30px;"><span>%.object_description%</span></div>
+    <div class="device-details"><#LANG_DEVICES_STATUS#>: %.state_description%  <i class="fas fa-battery-three-quarters fa-rotate-270"></i>%.battery%%</div> 
+    <div class="device-details" style="%.error|"display:none;"%"><#LANG_STRING_ERROR#>: %.error_description%</div>
+    <div class="device-details" style="%.error|";display:none"%">Filter: %.filter_life%h</div>
+
+</div>

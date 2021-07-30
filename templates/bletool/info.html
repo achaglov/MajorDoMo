@@ -1,0 +1,38 @@
+
+
+<br>
+<b>hcitool dev:<br></b>
+[#hcitooldev#]<br>
+
+<b>hciconfig:<br></b>
+[#bluetoothctl#]<br>
+
+<b>sudo hcitool con:<br></b>
+[#con#]<br>
+
+
+<b>sudoers test:<br></b>
+						[#if SUDO_TEST="1"#]
+
+								Пользователь www-data имеет права  к выполнению команд через sudo.<br />
+[#else#]							
+<span style="color: red;">
+								Пользователь www-data не имеет права  к выполнению команд через sudo.<br />
+							</span>
+
+
+В терминале Linux введите "<i>sudo visudo</i>" и в открывшийся файл добавьте строки:<br>
+www-data ALL=(root) NOPASSWD: /usr/bin/timeout<br>
+www-data ALL=(root) NOPASSWD: /usr/bin/hcitool<br>
+www-data ALL=(root) NOPASSWD: /bin/echo<br>
+www-data ALL=(root) NOPASSWD: /usr/bin/gatttool<br>
+www-data ALL=(root) NOPASSWD: /bin/hciconfig<br>
+после чего нажмите <i>Ctrl+O</i> и <i>Enter</i> для сохранения изменений. Выход из visudo осуществляется с помощью сочетания клавиш <i>Ctrl+X</i>.
+							<br />
+						[#endif#]
+
+
+
+
+<br>
+ <a href="?view_mode=resethci&id=[#ID#]&tab=indata" class="btn btn-primary">RESET HCI</a>

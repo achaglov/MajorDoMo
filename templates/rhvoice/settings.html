@@ -1,0 +1,52 @@
+<form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
+    <fieldset>
+        <div class="form-group">
+            <label class="control-label"> <#LANG_VOICE#> </label>
+            <div class="col-lg-6">
+                <select name="voice" id="voice" class="form-control">
+                    <option value="Aleksandr"[#if VOICE="Aleksandr"#] selected[#endif#]><#LANG_VOICE_ALEKSANDR#></option>
+                    <option value="Elena"[#if VOICE="Elena"#] selected[#endif#]><#LANG_VOICE_ELENA#></option>
+                    <option value="Anna"[#if VOICE="Anna"#] selected[#endif#]><#LANG_VOICE_ANNA#></option>
+                    <option value="Anna+CLB"[#if VOICE="Anna+CLB"#] selected[#endif#]><#LANG_VOICE_ANNA#>+CLB</option>
+                    <option value="CLB"[#if VOICE="CLB"#] selected[#endif#]><#LANG_VOICE_CLB#></option>
+                    <option value="SLT"[#if VOICE="SLT"#] selected[#endif#]><#LANG_VOICE_SLT#></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="controls">
+                <label><input type="checkbox" name="use_spd" value="1"[#if USE_SPD="1"#] checked[#endif#]><#LANG_USE_SPD#></label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="controls">
+                <label><input type="checkbox" name="use_cache" value="1"[#if USE_CACHE="1"#] checked[#endif#]><#LANG_USE_CACHE#></label>
+            </div>
+        </div>
+    <script language="javascript">
+    	function useRestApi() {
+           if ($('#use_rest_api').is(':checked')) {
+              $('#use_rest_api_details').show();
+           } else {
+              $('#use_rest_api_details').hide();
+           }
+        }
+    </script>
+        <div class="form-group">
+            <div class="controls">
+                <label><input type="checkbox" id="use_rest_api" name="use_rest_api" value="1" [#if USE_REST_API="1"#] checked[#endif#] onClick='useRestApi();'>Использовать RESTAPI https://github.com/Aculeasis/rhvoice-rest</label>
+            </div>
+        </div>
+        <div id="use_rest_api_details" class="form-group" [#if USE_REST_API!="1"#] style="display:none"[#endif#]>
+            <div class="controls">
+                <label>Введите IP адрес устройства где установлено RESTAPI с портом :</label>
+                <input type="text"  name="ip_for_userestapi" value="[#IP_FOR_USERESTAPI#]">
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" name="subm" value="Submit" class="btn btn-primary"><#LANG_UPDATE#></button>
+            <input type="hidden" name="view_mode" value="update_settings">
+            <input type="hidden" name="mode" value="update">
+        </div>
+    </fieldset>
+</form>

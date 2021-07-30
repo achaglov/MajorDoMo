@@ -1,0 +1,105 @@
+
+
+
+
+
+
+<form action="?" method="post" enctype="multipart/form-data" name="frmEdit" class="form-horizontal">
+<fieldset>
+
+   <table  border="0">
+    <tr>
+     <td >
+     File:
+     <select name="file" id='file' onChange="document.frmEdit.submit();">
+      <option value="[#FN#]">[#FN#]
+      [#begin FILES#]
+      <option value="[#TITLE#]">[#TITLE#]
+      [#end FILES#]
+     </select>
+     </td>
+
+	<td>
+
+
+<!--<button type="submit" name="subm" value="Submit" class="btn btn-primary" >Open</button> -->
+
+<input type="hidden" name="view_mode" value="update_log">
+<input type="hidden" name="update_log" value="update_log">
+<input type="hidden" name="mode" value="update">
+<input type="hidden" name="tab" value="log">
+
+</fieldset>
+</form>
+
+
+
+
+
+
+     </td>
+
+    </tr>
+</table>
+
+
+<!-- [#FN#]:-->
+
+
+
+<script type="text/javascript">
+    function viewlog(fn) {
+
+// clearTimeout(logTimer);
+
+// window.clearTimeout(logTimer);
+//  clearTimeout(deviceRefreshTimer[#ID#]);
+        var url="/ajax/zigbee2mqtt.html?op=viewlog&fn="+fn;
+//        $("#auth_log").html('wait...');
+        $.ajax({
+            url: url,
+            cache: false,
+            success: function(html){
+                $("#auth_log").html(html);
+            }
+        });
+//  logTimer = window.setTimeout('viewlog(fn);',1000);
+//  logTimer = window.setTimeout('viewlog();',2000);
+//  logTimer = window.setTimeout('viewlog("/opt/zigbee2mqtt/data/log/2019-05-05.22-35-52/log.txt");',1000);
+  logTimer = window.setTimeout('viewlog("[#FN#]");',2000);
+//   viewlog("[#FN#]");
+}
+   viewlog("[#FN#]");
+
+    
+</script>
+<!--<div class="modal fade" id="viewlog" tabindex="-1" role="dialog" aria-labelledby="about1" aria-hidden="true" height="100"> -->
+<div  id="viewlog" tabindex="-1" role="dialog" aria-labelledby="about1" aria-hidden="true" height="100"> 
+
+
+    <div>
+
+
+    <p  id="auth_log" >    </p>
+
+   </div>
+
+</div>
+
+
+
+
+
+    <p  id="auth_log" >    </p>
+    </div>
+    </div>
+
+
+
+<!--   <a onclick="viewlog('[#FN#]')" class="btn btn-default"  data-toggle="modal" data-target="#viewlog"  title="View"><i class="glyphicon glyphicon-film"></i></a> -->
+
+
+<br>
+
+[#LOG2#]
+
