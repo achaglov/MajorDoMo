@@ -10,7 +10,7 @@ reboot
 *.phpproj.user
 .vs/
 backup/
-database_backup/
+database_backup/*
 /cms/debmes/*
 /cms/cached/*
 /config.php
