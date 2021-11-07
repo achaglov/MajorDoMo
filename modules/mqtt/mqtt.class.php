@@ -227,12 +227,30 @@ class mqtt extends module
     }
 
 
-    function mqttPublish($topic, $value, $qos = 0, $retain = 0)
+    function mqttPublish($topic, $value, $qos = 0, $retain = 0, $write_type = 0)
     {
-        //include_once("./lib/mqtt/phpMQTT.php");
-        include_once(ROOT . "3rdparty/phpmqtt/phpMQTT.php");
 
         $this->getConfig();
+        if ($write_type==0 && $this->config['MQTT_WRITE_METHOD']) {
+            $write_type=2;
+        }
+
+        if ($write_type==2) {
+            $data=array('v'=>$value);
+            if ($qos) {
+                $data['q']=$qos;
+            }
+            if ($retain) {
+                $data['r']=$retain;
+            }
+            addToOperationsQueue('mqtt_queue',$topic,json_encode($data),true);
+            return 1;
+        }
+
+        include_once(ROOT . "3rdparty/phpmqtt/phpMQTT.php");
+
+
+
         if ($this->config['MQTT_CLIENT']) {//
             $client_name = $this->config['MQTT_CLIENT'];
         } else {
@@ -299,10 +317,10 @@ class mqtt extends module
                 $url = str_replace('%VALUE%', $value, $url);
                 getURL($url, 0);
             } else {
-                $this->mqttPublish($rec['PATH_WRITE'], $value, (int)$rec['QOS'], (int)$rec['RETAIN']);
+                $this->mqttPublish($rec['PATH_WRITE'], $value, (int)$rec['QOS'], (int)$rec['RETAIN'], (int)$rec['WRITE_TYPE']);
             }
         } else {
-            $this->mqttPublish($rec['PATH'], $value, (int)$rec['QOS'], (int)$rec['RETAIN']);
+            $this->mqttPublish($rec['PATH'], $value, (int)$rec['QOS'], (int)$rec['RETAIN'], (int)$rec['WRITE_TYPE']);
         }
         //$mqtt_client->close();
 
@@ -438,6 +456,7 @@ class mqtt extends module
         $out['MQTT_HOST'] = $this->config['MQTT_HOST'];
         $out['MQTT_PORT'] = $this->config['MQTT_PORT'];
         $out['MQTT_QUERY'] = $this->config['MQTT_QUERY'];
+        $out['MQTT_WRITE_METHOD'] = (int)$this->config['MQTT_WRITE_METHOD'];
 
         if (!$out['MQTT_HOST']) {
             $out['MQTT_HOST'] = 'localhost';
@@ -469,6 +488,7 @@ class mqtt extends module
             $this->config['MQTT_AUTH'] = (int)$mqtt_auth;
             $this->config['MQTT_PORT'] = (int)$mqtt_port;
             $this->config['MQTT_QUERY'] = trim($mqtt_query);
+            $this->config['MQTT_WRITE_METHOD'] = gr('mqtt_write_method','int');
             $this->saveConfig();
 
             setGlobal('cycle_mqttControl', 'restart');
@@ -687,6 +707,7 @@ class mqtt extends module
  mqtt: RETAIN int(3) NOT NULL DEFAULT '0'
  mqtt: DISP_FLAG int(3) NOT NULL DEFAULT '0'
  mqtt: READONLY int(3) NOT NULL DEFAULT '0'
+ mqtt: WRITE_TYPE int(3) NOT NULL DEFAULT '0'
  mqtt: ONLY_NEW_VALUE int(3) NOT NULL DEFAULT '0'
 EOD;
         parent::dbInstall($data);

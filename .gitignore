@@ -10,9 +10,7 @@ reboot
 *.phpproj.user
 .vs/
 backup/
-webcam/
 /cms/debmes/*
 /cms/cached/*
 /config.php
-/cam.php
 .uploadrc

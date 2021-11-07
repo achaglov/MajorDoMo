@@ -42,6 +42,9 @@ while (!$connected) {
 
 echo "CONNECTED TO DB" . PHP_EOL;
 
+// создаем табличку cyclesRun, если её нет
+SQLExec('CREATE TABLE IF NOT EXISTS `cyclesRun` (`KEYWORD` char(100) NOT NULL,`DATAVALUE` char(255) NOT NULL,PRIMARY KEY (`KEYWORD`)) ENGINE=MEMORY DEFAULT CHARSET=utf8;');
+
 $old_mask = umask(0);
 if (is_dir(ROOT . 'cached')) {
     DebMes("Removing cache from " . ROOT . 'cached');
@@ -355,6 +358,9 @@ while (false !== ($result = $threads->iteration())) {
         }
 
         $is_running = array();
+        $tmpcyclesTimestamps=SQLSelect("SELECT * FROM cyclesRun;");
+        foreach ($tmpcyclesTimestamps as $k => $v) $cyclesTimestamps[$v['KEYWORD']] = $v['DATAVALUE'];
+        
         foreach ($threads->commandLines as $id => $cmd) {
             if (preg_match('/(cycle_.+?)\.php/is', $cmd, $m)) {
                 $title = $m[1];
@@ -364,9 +370,14 @@ while (false !== ($result = $threads->iteration())) {
                     DebMes("Adding $title to auto-recovery list", 'threads');
                     $auto_restarts[] = $title;
                 }
-                $cycle_updated_timestamp = getGlobal($title . 'Run');
 
-                if (!$to_start[$title] && $cycle_updated_timestamp && in_array($title, $auto_restarts) && ((time() - $cycle_updated_timestamp) > 30 * 60)) { //
+                //$cycle_updated_timestamp = getGlobal($title . 'Run');
+                $cycle_updated_timestamp=$cyclesTimestamps[strtolower('MJD:ThisComputer.'.$title.'Run')];
+                if (!isset($to_start[$title]) &&
+                    $cycle_updated_timestamp &&
+                    in_array($title, $auto_restarts) &&
+                    ((time() - $cycle_updated_timestamp) > 30 * 60)
+                ) { //
                     DebMes("Looks like $title is dead (updated: ".date('Y-m-d H:i:s',$cycle_updated_timestamp)."). Need to recovery", 'threads');
                     registerError('cycle_hang', $title);
                     setGlobal($title . 'Control', 'restart');
@@ -442,12 +453,12 @@ while (false !== ($result = $threads->iteration())) {
                         unset($auto_restarts[$key]);
                         $auto_restarts = array_values($auto_restarts);
                         $need_restart = 1;
-                    } elseif ($to_start[$cycle_title]) {
+                    } elseif (isset($to_start[$cycle_title])) {
                         $need_restart = 1;
                     }
                 }
                 if ($need_restart && $cycle_title) {
-                    if (!$to_start[$cycle_title]) {
+                    if (!isset($to_start[$cycle_title])) {
                         DebMes("AUTO-RECOVERY: " . $closed_thread, 'threads');
                         if (!preg_match('/websockets/is', $closed_thread) && !preg_match('/connect/is', $closed_thread)) {
                             registerError('cycle_stop', $closed_thread . "\n" . $result);

@@ -364,6 +364,7 @@ $dictionary = array(
 
 
     'AUTO_UPDATE_PERIOD' => 'Период автообновления',
+    'UPDATEARHIVE_DONE' => 'Скачиваем архив',
     'POLLING_PERIOD' => 'Период опроса',
 
 
@@ -1368,6 +1369,7 @@ $dictionary = array(
     'DID_YOU_KNOW' => 'А знаете ли вы что...',
     'NEWS' => 'Новости MajorDoMo',
     'KNOWLEDGE_BASE' => 'База знаний',
+    'MODULE_SUPPORT' => 'Сайт модуля',
     'ACTIVITIES' => 'Поведение',
     'COMMANDS' => 'Команды',
     'ADDON_FILE' => 'Файл дополнения',
@@ -1551,6 +1553,12 @@ $dictionary = array(
 	'NEWDASH_DMB_TITLE_MODAL_STEP1' => '1. Создайте сценарий с именем:',
 	'NEWDASH_DMB_TITLE_MODAL_STEP2' => '2. Сценарий должен отдавать следующий JSON объект:',
 	'NEWDASH_DMB_TITLE_MODAL_STEP3' => '3. На этом все. Панель управления сама подхватит скрипт и выведет содержимое на главную страницу.',
+	
+	'NEWDASH_CONSOLE_CHOOSE_MODULE' => 'Выберите модуль...',
+	'NEWDASH_CONSOLE_SIZE_HINT' => 'Размер консоли можно изменить',
+	'NEWDASH_SEARCH_HINT' => 'Глобальный поиск по всей системе. Начните вводить...',
+	'NEWDASH_CONNECT_CONNECT_ERROR_1' => 'Ваша копия MajorDoMo не может связаться с сервером Connect. Ввиду этого, маркет и некоторые другие функции могут быть недоступны.',
+	'NEWDASH_CONNECT_CONNECT_ERROR_2' => 'Обычно, ситуация налаживается спустя несколько минут.',
 	
 	'NEWDASH_RESULT' => 'Результат',
 	'NEWDASH_MJDM_VERSION' => 'Текущая версия MJDM',

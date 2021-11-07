@@ -2,6 +2,11 @@
 
 class saverestore extends module
 {
+    var $mode;
+    var $view_mode;
+    var $edit_mode;
+    var $ajax;
+	
     /**
      * saverestore
      *
@@ -232,6 +237,8 @@ class saverestore extends module
 					
                     $out['LATEST_CURR_BRANCH'] = $this->config['LATEST_CURR_BRANCH'];
                     $out['LATEST_UPDATED_ID'] = $this->config['LATEST_UPDATED_ID'];
+                    $out['LATEST_UPDATED_ID_SLICE'] = mb_strtoupper(substr($this->config['LATEST_UPDATED_ID'], 0, 7));
+                    $out['LATEST_UPDATED_TIME'] = gg('LatestUpdateTimestamp');
               
 					$currBranch = explode("/", $update_url);
 					$out['UPDATE_CURR_BRANCH'] = mb_strtoupper(explode('.', $currBranch[6])[0]);
@@ -496,7 +503,7 @@ class saverestore extends module
         }
 
         if ($iframe) {
-			echonow('<div><i style="font-size: 7pt;" class="glyphicon glyphicon-chevron-right"></i> Скачиваем архив '.$url.'</div>');
+            echonow('<div><i style="font-size: 7pt;" class="glyphicon glyphicon-chevron-right"></i> '.LANG_UPDATEARHIVE_DONE . ' '. $url.'</div>');
         }
 
         $ch = curl_init();
@@ -1322,6 +1329,9 @@ class saverestore extends module
                 exec('tar xzvf ../' . $file, $output, $res);
             }
 
+            $UpdatesDir = scandir(DOC_ROOT . DIRECTORY_SEPARATOR . 'cms/saverestore/temp',1);
+            $folder = DIRECTORY_SEPARATOR . $UpdatesDir[0];
+		
             if ($iframe) {
                 echonow('<div><i style="font-size: 7pt;" class="glyphicon glyphicon-usd"></i> '.LANG_UPDATEBACKUP_DONE.'</div>');
             }

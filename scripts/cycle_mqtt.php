@@ -56,11 +56,13 @@ if ($mqtt->config['MQTT_QUERY']) {
 $mqtt_client = new Bluerhinos\phpMQTT($host, $port, $client_name);
 
 if ($mqtt->config['MQTT_AUTH']) {
-    if (!$mqtt_client->connect(true, NULL, $username, $password)) {
+	$connect = $mqtt_client->connect(true, NULL, $username, $password);
+    if (!$connect) {
         exit(1);
     }
 } else {
-    if (!$mqtt_client->connect()) {
+	$connect = $mqtt_client->connect();
+    if (!$connect) {
         exit(1);
     }
 }
@@ -82,16 +84,27 @@ $previousMillis = 0;
 
 while ($mqtt_client->proc()) {
 
-    /*
-    $tmp=SQLSelect("SELECT * FROM mqtt_queue ORDER BY ID");
-    if ($tmp[0]['ID']) {
-     $total=count($tmp);
-     for($i=0;$i<$total;$i++) {
-      SQLExec('DELETE FROM mqtt_queue WHERE ID='.$tmp[$i]['ID']);
-      $mqtt_client->publish($tmp[$i]['PATH'],$tmp[$i]['VALUE']);
-     }
+
+    if ($mqtt->config['MQTT_WRITE_METHOD']==2) {
+        $queue = checkOperationsQueue('mqtt_queue');
+        foreach ($queue as $mqtt_data) {
+            $topic=$mqtt_data['DATANAME'];
+            $data_value=json_decode($mqtt_data['DATAVALUE'],true);
+            $value=$data_value['v'];
+            $qos=0;
+            if (isset($data_value['q'])) {
+                $qos=$data_value['q'];
+            }
+            $retain=0;
+            if (isset($data_value['r'])) {
+                $retain=$data_value['r'];
+            }
+            if ($topic!='') {
+                echo "Publishing to $topic : $value\n";
+                $mqtt_client->publish($topic, $value, $qos, $retain);
+            }
+        }
     }
-    */
 
     $currentMillis = round(microtime(true) * 10000);
 
@@ -101,7 +114,8 @@ while ($mqtt_client->proc()) {
         setGlobal((str_replace('.php', '', basename(__FILE__))) . 'Run', time(), 1);
 
         if (file_exists('./reboot') || IsSet($_GET['onetime'])) {
-            $mqtt_client->close();
+			
+			$mqtt_client->close();
             $db->Disconnect();
             exit;
         }
@@ -121,7 +135,7 @@ function procmsg($topic, $msg) {
     //getURLBackground($url);
     if (!isset($topic) || !isset($msg)) return false;
 
-    echo date("Y-m-d H:i:s") . " Topic:{$topic} $msg\n";
+    echo date("Y-m-d H:i:s") . " Received from {$topic} : $msg\n";
     if (function_exists('callAPI')) {
         callAPI('/api/module/mqtt','GET',array('topic'=>$topic,'msg'=>$msg));
     } else {
